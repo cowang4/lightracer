@@ -1,8 +1,7 @@
-use std::ops::{Add, Sub, Mul, Neg};
+use std::ops::{Add, Sub, Mul, Div, Neg};
 //use serde::{Deserialize, Deserializer};
 
 #[derive(Copy, Clone, Debug, Deserialize)]
-#[repr(C)]
 pub struct Vector3 {
     pub x: f64,
     pub y: f64,
@@ -109,6 +108,30 @@ impl Mul<Vector3> for f64 {
 
     fn mul(self, other: Vector3) -> Vector3 {
         other * self
+    }
+}
+
+impl Div for Vector3 {
+    type Output = Vector3;
+
+    fn div(self, other: Vector3) -> Vector3 {
+        Vector3 {
+            x: self.x / other.x,
+            y: self.y / other.y,
+            z: self.z / other.z,
+        }
+    }
+}
+
+impl Div<f64> for Vector3 {
+    type Output = Vector3;
+
+    fn div(self, other: f64) -> Vector3 {
+        Vector3 {
+            x: self.x / other,
+            y: self.y / other,
+            z: self.z / other,
+        }
     }
 }
 

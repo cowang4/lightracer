@@ -2,7 +2,6 @@ use std::ops::{Add, Sub};
 use vector::Vector3;
 
 #[derive(Copy, Clone, Debug, Deserialize)]
-#[repr(C)]
 pub struct Point {
     pub x: f64,
     pub y: f64,
@@ -64,6 +63,16 @@ impl Sub<Point> for Point {
             x: self.x - other.x,
             y: self.y - other.y,
             z: self.z - other.z,
+        }
+    }
+}
+
+impl From<Vector3> for Point {
+    fn from(v: Vector3) -> Point {
+        Point {
+            x: v.x,
+            y: v.y,
+            z: v.z,
         }
     }
 }
