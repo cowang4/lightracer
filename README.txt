@@ -3,4 +3,4 @@
 
 A simple ray tracer.
 
-![](./test.png)
+![](https://raw.githubusercontent.com/cowang4/lightracer/master/test.png)
