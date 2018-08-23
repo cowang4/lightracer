@@ -3,4 +3,4 @@
 
 A simple ray tracer.
 
-[](test.png)
+![](test.png)
