@@ -1,9 +1,10 @@
 
+use enum_dispatch::enum_dispatch;
 
-use color::Color;
-use point::Point;
-use rendering::Intersectable;
-use vector::Vector3;
+use crate::color::Color;
+use crate::point::Point;
+use crate::rendering::Intersectable;
+use crate::vector::Vector3;
 
 #[derive(Debug)]
 pub struct Sphere {
@@ -20,15 +21,21 @@ pub struct Plane {
     pub intensity: f32,
 }
 
+#[enum_dispatch(Intersectable)]
+pub enum Object {
+    Sphere,
+    Plane,
+}
+
 pub struct Scene {
     pub width: u32,
     pub height: u32,
     pub fov: f64,
-    pub objects: Vec<Box<Intersectable>>,
+    pub objects: Vec<Object>,
 }
 
 impl Scene {
-    pub fn lights(&self) -> Vec<&Box<Intersectable>> {
+    pub fn lights(&self) -> Vec<&Object> {
         self.objects.iter().filter(|o| o.is_light()).collect()
     }
 }

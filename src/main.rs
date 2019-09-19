@@ -1,10 +1,4 @@
 
-extern crate image;
-extern crate serde;
-#[macro_use]
-extern crate serde_derive;
-extern crate rayon;
-
 mod color;
 mod scene;
 mod point;
@@ -14,13 +8,12 @@ mod rendering;
 use std::path::PathBuf;
 
 use image::{DynamicImage, GenericImage};
-//use rayon::prelude::*;
 
-use color::Color;
-use scene::*;
-use point::Point;
-use rendering::{Ray, cast_camera_ray};
-use vector::Vector3;
+use crate::color::Color;
+use crate::scene::*;
+use crate::point::Point;
+use crate::rendering::{Ray, cast_camera_ray};
+use crate::vector::Vector3;
 
 // this project was inspired/copied from https://bheisler.github.io/post/writing-raytracer-in-rust-part-1/
 
@@ -53,26 +46,6 @@ pub fn render(scene: &Scene) -> DynamicImage {
 
 #[test]
 fn test_can_render_scene() {
-    let scene = Scene {
-        width: 800,
-        height: 600,
-        fov: 90.0,
-        objects: vec![
-            Box::new(
-                Sphere {
-                    center: Point {
-                        x: 0.0,
-                        y: 0.0,
-                        z: -5.0,
-                    },
-                    radius: 1.0,
-                    color: Color(Rgba{data: [40, 55, 40, 255],}),
-                    is_light: false,
-                }
-            ),
-        ],
-    };
-
     let img: DynamicImage = render(&scene);
     assert_eq!(scene.width, img.width());
     assert_eq!(scene.height, img.height());
@@ -84,7 +57,7 @@ fn main() {
         height: 600,
         fov: 90.0,
         objects: vec![
-            Box::new(
+            Object::from(
                 Plane {
                     center: Point {
                         x: 0.0,
@@ -104,7 +77,7 @@ fn main() {
                     intensity: 0.0,
                 }
             ),
-            Box::new(
+            Object::from(
                 Sphere {
                     center: Point {
                         x: 0.0,
@@ -120,7 +93,7 @@ fn main() {
                     intensity: 0.0,
                 }
             ),
-            Box::new(
+            Object::from(
                 Sphere {
                     center: Point {
                         x: 1.0,
@@ -136,7 +109,7 @@ fn main() {
                     intensity: 0.0,
                 }
             ),
-            Box::new(
+            Object::from(
                 Sphere {
                     center: Point {
                         x: 4.0,
@@ -152,7 +125,7 @@ fn main() {
                     intensity: 10.0,
                 }
             ),
-            Box::new(
+            Object::from(
                 Sphere {
                     center: Point {
                         x: 10.0,

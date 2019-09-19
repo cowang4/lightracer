@@ -1,5 +1,8 @@
 use std::ops::{Add, Sub};
-use vector::Vector3;
+
+use serde_derive::{Deserialize};
+
+use crate::vector::Vector3;
 
 #[derive(Copy, Clone, Debug, Deserialize)]
 pub struct Point {
