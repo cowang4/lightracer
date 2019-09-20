@@ -5,24 +5,24 @@ use serde_derive::{Deserialize};
 
 #[derive(Copy, Clone, Debug, Deserialize)]
 pub struct Vector3 {
-    pub x: f64,
-    pub y: f64,
-    pub z: f64,
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
 }
 impl Vector3 {
     pub fn zero() -> Vector3 {
         Vector3::from_one(0.0)
     }
 
-    pub fn from_one(v: f64) -> Vector3 {
+    pub fn from_one(v: f32) -> Vector3 {
         Vector3 { x: v, y: v, z: v }
     }
 
-    pub fn length(&self) -> f64 {
+    pub fn length(&self) -> f32 {
         self.norm().sqrt()
     }
 
-    pub fn norm(&self) -> f64 {
+    pub fn norm(&self) -> f32 {
         (self.x * self.x + self.y * self.y + self.z * self.z)
     }
 
@@ -35,7 +35,7 @@ impl Vector3 {
         }
     }
 
-    pub fn dot(&self, other: &Vector3) -> f64 {
+    pub fn dot(&self, other: &Vector3) -> f32 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
 
@@ -93,10 +93,10 @@ impl Mul for Vector3 {
     }
 }
 
-impl Mul<f64> for Vector3 {
+impl Mul<f32> for Vector3 {
     type Output = Vector3;
 
-    fn mul(self, other: f64) -> Vector3 {
+    fn mul(self, other: f32) -> Vector3 {
         Vector3 {
             x: self.x * other,
             y: self.y * other,
@@ -105,7 +105,7 @@ impl Mul<f64> for Vector3 {
     }
 }
 
-impl Mul<Vector3> for f64 {
+impl Mul<Vector3> for f32 {
     type Output = Vector3;
 
     fn mul(self, other: Vector3) -> Vector3 {
@@ -125,10 +125,10 @@ impl Div for Vector3 {
     }
 }
 
-impl Div<f64> for Vector3 {
+impl Div<f32> for Vector3 {
     type Output = Vector3;
 
-    fn div(self, other: f64) -> Vector3 {
+    fn div(self, other: f32) -> Vector3 {
         Vector3 {
             x: self.x / other,
             y: self.y / other,

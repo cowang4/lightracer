@@ -1,18 +1,22 @@
 
 mod color;
-mod scene;
+mod intersectable;
+mod math;
 mod point;
-mod vector;
+mod ray;
 mod rendering;
+mod scene;
+mod vector;
 
 use std::path::PathBuf;
 
 use image::{DynamicImage, GenericImage};
 
 use crate::color::Color;
-use crate::scene::*;
 use crate::point::Point;
-use crate::rendering::{Ray, cast_camera_ray};
+use crate::ray::Ray;
+use crate::rendering::{cast_camera_ray};
+use crate::scene::*;
 use crate::vector::Vector3;
 
 // this project was inspired/copied from https://bheisler.github.io/post/writing-raytracer-in-rust-part-1/
@@ -26,37 +30,15 @@ pub fn render(scene: &Scene) -> DynamicImage {
             image.put_pixel(x, y, color);
         }
     }
-    // (0u32..scene.width)
-    //     .into_iter()
-    //     .collect::<Vec<u32>>()
-    //     .par_iter()
-    //     .map(|x| {
-    //         (0..scene.height)
-    //             .into_iter()
-    //             .collect::<Vec<u32>>()
-    //             .par_iter()
-    //             .map(|y| {
-    //                 let camera_ray = Ray::create_camera(*x, *y, scene);
-    //                 let color = cast_camera_ray(scene, &camera_ray);
-    //                 image.put_pixel(*x, *y, color);
-    //             });
-    //     });
     image
 }
 
-#[test]
-fn test_can_render_scene() {
-    let img: DynamicImage = render(&scene);
-    assert_eq!(scene.width, img.width());
-    assert_eq!(scene.height, img.height());
-}
-
 fn main() {
-    let scene = Scene {
-        width: 800,
-        height: 600,
-        fov: 90.0,
-        objects: vec![
+    let scene = Scene::new(
+        1920,
+        1080,
+        90.0,
+        vec![
             Object::from(
                 Plane {
                     center: Point {
@@ -106,7 +88,7 @@ fn main() {
                         green: 0.9,
                         blue: 0.1,
                     },
-                    intensity: 0.0,
+                    intensity: 1.0,
                 }
             ),
             Object::from(
@@ -142,7 +124,7 @@ fn main() {
                 }
             ),
         ],
-    };
+    );
 
     let image = render(&scene);
 

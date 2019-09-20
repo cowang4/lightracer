@@ -6,16 +6,16 @@ use crate::vector::Vector3;
 
 #[derive(Copy, Clone, Debug, Deserialize)]
 pub struct Point {
-    pub x: f64,
-    pub y: f64,
-    pub z: f64,
+    pub x: f32,
+    pub y: f32,
+    pub z: f32,
 }
 impl Point {
     pub fn zero() -> Point {
         Point::from_one(0.0)
     }
 
-    pub fn from_one(v: f64) -> Point {
+    pub fn from_one(v: f32) -> Point {
         Point { x: v, y: v, z: v }
     }
 }
