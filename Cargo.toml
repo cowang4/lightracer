@@ -5,8 +5,8 @@ authors = ["Greg Cowan <cowang4@yahoo.com>"]
 edition = "2018"
 
 [dependencies]
-enum_dispatch = "0.1"
-image = "0.23"
+enum_dispatch = "0.3"
+image = "0.24"
 serde = "1.0"
 serde_derive = "1.0"
 
