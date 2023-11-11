@@ -2,7 +2,7 @@
 use std::convert::Into;
 use std::ops::{Add, AddAssign, Div, Mul};
 
-use image::{Rgba, Pixel};
+use image::{Rgba};
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Color {
@@ -104,19 +104,20 @@ impl Color {
 impl Into<Rgba<u8>> for Color {
     fn into(self) -> Rgba<u8> {
         self.clamp();
-        Rgba::from_channels((gamma_encode(self.red) * 255.0) as u8,
-                            (gamma_encode(self.green) * 255.0) as u8,
-                            (gamma_encode(self.blue) * 255.0) as u8,
-                            255)
+        Rgba([(gamma_encode(self.red) * 255.0) as u8,
+              (gamma_encode(self.green) * 255.0) as u8,
+              (gamma_encode(self.blue) * 255.0) as u8,
+              255])
     }
 }
 
 impl From<Rgba<u8>> for Color {
     fn from(rgba: Rgba<u8>) -> Color {
+        let channels = rgba.0;
         Color {
-            red: gamma_decode((rgba.data[0] as f32) / 255.0),
-            green: gamma_decode((rgba.data[1] as f32) / 255.0),
-            blue: gamma_decode((rgba.data[2] as f32) / 255.0),
+            red: gamma_decode((channels[0] as f32) / 255.0),
+            green: gamma_decode((channels[1] as f32) / 255.0),
+            blue: gamma_decode((channels[2] as f32) / 255.0),
         }
     }
 }
